@@ -1,0 +1,177 @@
+1. 1.
+Question 1
+All of the questions in this quiz refer to the open source Chinook Database. Please familiarize yourself with the ER diagram in order to familiarize yourself with the table and column names in order to write accurate queries and get the appropriate answers.
+
+Pull a list of customer ids with the customer’s full name, and address, along with combining their city and country together. Be sure to make a space in between these two and make it UPPER CASE. (e.g. LOS ANGELES USA)
+
+******************** Code ********************
+
+SELECT CustomerId
+      , FirstName || ' ' || LastName
+      , City || ' ' || Country
+FROM Customers
+
+
+***********************************************
+
+What is the city and country result for CustomerID 16?
+
+
+Mountain View USA
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+2. Create a new employee user id by combining the first 4 letters of the employee’s first name with the first 2 letters of the employee’s last name. Make the new field lower case and pull each individual step to show your work.
+
+******************** Code ********************
+
+SELECT LOWER(SUBSTR(FirstName,1,4) || SUBSTR(LastName,1,2)) AS new_name
+      , FirstName
+      , LastName
+FROM Customers
+
+
+***********************************************
+
+What is the final result for Robert King?
+
+
+robeki
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+3. Show a list of employees who have worked for the company for 15 or more years using the current date function. Sort by lastname ascending.
+
+******************** Code ********************
+SELECT FirstName
+      , LastName
+      , date('now')-HireDate AS Work_Dur
+FROM Employees
+WHERE Work_Dur >= 15
+ORDER BY LastName ASC
+
+
+***********************************************
+
+What is the lastname of the last person on the list returned?
+
+Peacock
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+4. Profiling the Customers table, answer the following question.
+
+
+******************** Code ********************
+
+SELECT *
+FROM Customers
+WHERE (Phone IS NULL) OR (Address IS NULL) OR (Fax IS NULL) OR (Company IS NULL) OR (PostalCode IS NULL) OR (FirstName IS NULL)
+
+
+***********************************************
+
+Question 4
+All of the questions in this quiz refer to the open source Chinook Database. Please familiarize yourself with the ER diagram in order to familiarize yourself with the table and column names in order to write accurate queries and get the appropriate answers.
+
+Profiling the Customers table, answer the following question.
+
+
+Reset
+Are there any columns with null values? Indicate any below. Select all that apply.
+
+
+Fax
+
+Phone
+
+Company
+
+Postal Code
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+5. Find the cities with the most customers and rank in descending order.
+
+******************** Code ********************
+
+SELECT COUNT(CustomerID)
+      , City
+FROM CUSTOMERS
+GROUP BY (City)
+ORDER BY COUNT(CustomerID) DESC
+
+
+***********************************************
+
+Which of the following cities indicate having 2 customers?
+
+
+London
+
+
+
+São Paulo
+
+
+
+Mountain View
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+6.Create a new customer invoice id by combining a customer’s invoice id with their first and last name while ordering your query in the following order: firstname, lastname, and invoiceID.
+
+******************** Code ********************
+
+SELECT c.FirstName, c.LastName,i.InvoiceId,
+c.FirstName||c.LastName||i.InvoiceId AS NewID
+FROM Customers c
+INNER JOIN Invoices i
+ON c.CustomerID = i.CustomerID
+WHERE NewId like 'AstridGruber%'
+ORDER BY c.FirstName,c.LastName, i.InvoiceId
+
+
+***********************************************
+
+After running the query described above, determine what is the last name of the 6th record? Enter it below. Remember to order things in descending order to be sure to get the correct answer.
+
+Taylor
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+7. See if there are any customers who have a different city listed in their billing city versus their customer city.
+
+******************** Code ********************
+
+SELECT C.FirstName,
+       C.LastName,
+       C.City AS CustomerCity,
+       I.BillingCity
+FROM Customers C
+INNER JOIN Invoices I
+ON C.CustomerId = I.CustomerId
+WHERE CustomerCity != BillingCity
+
+
+***********************************************
+
+Select all of the correct "AstridGruber" entries that are returned in your results below. Select all that apply.
+
+
+
+AstridGruber273
+
+AstridGruber296
+
+
+AstridGruber370
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
